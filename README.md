@@ -1,1 +1,1 @@
-# ambiquity-man
+Initilization of Mr. Amb. 
