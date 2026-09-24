@@ -1,0 +1,4 @@
+.env
+ambedkar_archive_db/
+*.pdf
+__pycache__/
