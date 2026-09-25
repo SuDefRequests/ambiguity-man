@@ -1,4 +1,15 @@
-.env
+# Vector Databases & Indexes
 ambedkar_archive_db/
-*.pdf
+cad_archive_db/
+*.tar.gz
+*.sqlite3
+
+# Environment & Cache
+.env
 __pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+data_baws/
+
+test_search.py
