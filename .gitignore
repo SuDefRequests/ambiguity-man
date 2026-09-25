@@ -10,6 +10,7 @@ __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-data_baws/
+data/baws/
 
 test_search.py
+scripts/ 
