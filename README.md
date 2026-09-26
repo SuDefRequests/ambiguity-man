@@ -1,1 +1,0 @@
-Initilization of Mr. Amb. 
