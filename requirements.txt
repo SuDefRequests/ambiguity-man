@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+chromadb
+groq
+PyPDF2
+python-multipart
+gTTS
+python-dotenv

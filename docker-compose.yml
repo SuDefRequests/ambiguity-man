@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: abhilekh-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: abhilekh
+      POSTGRES_PASSWORD: abhilekh_dev
+      POSTGRES_DB: abhilekh
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: abhilekh-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  neo4j:
+    image: neo4j:5-community
+    container_name: abhilekh-neo4j
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: neo4j/abhilekh_dev
+      NEO4J_PLUGINS: '["apoc"]'
+    ports:
+      - "7474:7474"   # browser UI
+      - "7687:7687"   # bolt
+    volumes:
+      - neo4j_data:/data
+
+volumes:
+  pg_data:
+  qdrant_data:
+  neo4j_data:
