@@ -6,3 +6,4 @@ PyPDF2
 python-multipart
 gTTS
 python-dotenv
+elevenlabs
