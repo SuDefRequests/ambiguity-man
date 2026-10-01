@@ -3,3 +3,6 @@ chroma_db/
 __pycache__/
 *.mp3
 *.pdf
+ocr_data/
+.venv-ocr/
+.pytest_cache/
