@@ -6,3 +6,4 @@ __pycache__/
 ocr_data/
 .venv-ocr/
 .pytest_cache/
+docs/
