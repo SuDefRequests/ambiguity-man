@@ -91,7 +91,7 @@ def get_passage_adjacency(passage_id: str):
 @app.get("/api/v1/search", response_model=ArchiveSearchResponse)
 def search_passages(
     q: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1), Query()],
-    archive: Literal["all", "baws", "cad"] = "all",
+    archive: Literal["all", "baws", "cad", "ocr"] = "all",
     volume: int | None = Query(None, ge=1, le=5),
     limit: int = Query(8, ge=1, le=20),
 ):
@@ -139,7 +139,8 @@ def ask_archive(req: AskRequest):
         req.top_k,
     )
     
-    sources = [ArchivePassage.model_validate(hit.model_dump()) for hit in retrieved.results]
+    from app.ocr.models import OCRPassage
+    sources = [(OCRPassage if hit.archive_type == "ocr" else ArchivePassage).model_validate(hit.model_dump()) for hit in retrieved.results]
     if not sources:
         return AskResponse(question=req.question,
                            answer="No relevant archive evidence was found for this question.", sources=[])
@@ -355,3 +356,7 @@ def graph_article(number: str):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+from app.ocr.routes import router as ocr_router
+app.include_router(ocr_router)
