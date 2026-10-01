@@ -7,3 +7,8 @@ python-multipart
 gTTS
 python-dotenv
 elevenlabs
+
+# OCR page rendering; Paddle inference dependencies are in requirements-ocr.txt.
+PyMuPDF>=1.24,<2
+Pillow>=10,<13
+numpy>=1.26,<3
