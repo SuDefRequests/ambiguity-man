@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, StringConstraints
 from typing import Annotated, Optional, Literal
+from app.ocr.models import OCRPassage, OCRSearchHit
 
 
 class Passage(BaseModel):
@@ -51,9 +52,9 @@ class ArchiveSearchHit(ArchivePassage):
 
 class ArchiveSearchResponse(BaseModel):
     query: str
-    archive_searched: Literal["all", "baws", "cad"]
+    archive_searched: Literal["all", "baws", "cad", "ocr"]
     total_results: int
-    results: list[ArchiveSearchHit]
+    results: list[ArchiveSearchHit | OCRSearchHit]
 
 
 class SearchRequest(BaseModel):
@@ -114,7 +115,7 @@ class GraphResponse(BaseModel):
 
 class AskRequest(BaseModel):
     question: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
-    archive: Literal["all", "baws", "cad"] = "all"
+    archive: Literal["all", "baws", "cad", "ocr"] = "all"
     language: Literal["en", "hi", "mr"] | None = None
     volume: Optional[int] = Field(None, ge=1, le=5)
     top_k: int = Field(6, ge=1, le=8)
@@ -123,7 +124,7 @@ class AskRequest(BaseModel):
 class AskResponse(BaseModel):
     question: str
     answer: str
-    sources: list[ArchivePassage]
+    sources: list[ArchivePassage | OCRPassage]
 
 
 
