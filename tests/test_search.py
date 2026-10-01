@@ -57,7 +57,7 @@ class SearchContractTests(unittest.TestCase):
             self.assertEqual(reader.status_code, 200)
             self.assertEqual({k: v for k, v in hit.items() if k not in ('snippet', 'relevance_score')}, reader.json())
         self.collection.query.assert_called_once_with(query_texts=['education'], n_results=8,
-            where={'archive_type': {'$in': ['BAWS', 'CAD']}})
+            where={'archive_type': {'$in': ['BAWS', 'CAD', 'ocr']}})
 
     def test_filters_are_sent_before_retrieval_and_metadata_is_preserved(self):
         for archive in ('all', 'baws', 'cad'):
@@ -75,7 +75,7 @@ class SearchContractTests(unittest.TestCase):
                         for key in ('text', 'source', 'page', 'volume', 'title', 'url'):
                             self.assertEqual(hit[key], record[key])
                         self.assertEqual(hit['archive_type'], record['archive_type'].lower())
-                    expected = {'archive_type': {'$in': ['BAWS', 'CAD']}} if archive == 'all' else {'archive_type': archive.upper()}
+                    expected = {'archive_type': {'$in': ['BAWS', 'CAD', 'ocr']}} if archive == 'all' else {'archive_type': archive.upper()}
                     if volume is not None:
                         expected = {'$and': [expected, {'volume': volume}]}
                     self.assertEqual(self.collection.query.call_args.kwargs['where'], expected)

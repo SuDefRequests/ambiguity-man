@@ -50,7 +50,7 @@ class AskContractTests(unittest.TestCase):
         for source in body['sources']:
             self.assertEqual(source, self.client.get('/api/v1/passages/' + source['passage_id']).json())
         self.collection.query.assert_called_once_with(query_texts=['What do these records discuss?'],
-            n_results=6, where={'archive_type': {'$in': ['BAWS', 'CAD']}})
+            n_results=6, where={'archive_type': {'$in': ['BAWS', 'CAD', 'ocr']}})
 
     def test_filter_and_top_k_forwarding_to_existing_retrieval(self):
         with patch('app.passage_search.retrieve_passages', wraps=retrieve_passages) as retrieve:
