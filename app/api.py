@@ -168,6 +168,10 @@ def speak_archive(req: SpeakRequest):
         provider = get_tts_provider()
         audio = provider.synthesize(text=req.text, voice=req.voice, language=req.language)
     except Exception as exc:
+        print("🔥 ELEVENLABS TTS ERROR:", type(exc).__name__, flush=True)
+        print("   status:", getattr(exc, "status_code", None), flush=True)
+        print("   body:", getattr(exc, "body", None), flush=True)
+        print("   str:", str(exc), flush=True)
         raise HTTPException(503, detail={
             "code": "tts_unavailable",
             "message": "Archive narration is currently unavailable.",
