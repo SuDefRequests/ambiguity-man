@@ -4,10 +4,9 @@ from functools import lru_cache
 SUPPORTED_LANGUAGES = {"en", "hi", "mr"}
 
 
-@lru_cache(maxsize=1)
 def get_groq_client():
-    from groq import Groq
-    return Groq()
+    from app.groq_client import get_groq_client as _get_groq_client
+    return _get_groq_client()
 
 
 def translate_query_for_retrieval(question: str, language: str) -> str:
