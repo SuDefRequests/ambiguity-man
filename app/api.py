@@ -18,10 +18,9 @@ load_dotenv()
 app = FastAPI(title="Abhilekh Knowledge API", version="0.1.0")
 
 # Optional services are initialized only by the routes that use them.
-@lru_cache(maxsize=1)
 def get_groq_client():
-    from groq import Groq
-    return Groq()
+    from app.groq_client import get_groq_client as _get_groq_client
+    return _get_groq_client()
 
 
 @lru_cache(maxsize=1)
